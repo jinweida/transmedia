@@ -1,0 +1,11 @@
+prefix=/data/project/sunniwell/encng/3rdparty
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: x265
+Description: H.265/HEVC video encoder
+Version: 0.9
+Libs: -L${libdir} -lx265
+Libs.private: -lstdc++ -lm -lrt
+Cflags: -I${includedir}

@@ -1,0 +1,14 @@
+prefix=/data/project/sunniwell/encng/build/../3rdparty
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: libavdevice
+Description: FFmpeg device handling library
+Version: 55.10.100
+Requires: 
+Requires.private: libavfilter = 4.2.100, libavformat = 55.33.100
+Conflicts:
+Libs: -L${libdir}  -lavdevice 
+Libs.private: -lva -lX11 -lasound -L/data/project/sunniwell/encng/3rdparty/lib -lx265 -lx264 -L/data/project/sunniwell/encng/build/../3rdparty/lib -lfreetype -lfaac -lm -lz -pthread -lrt
+Cflags: -I${includedir}

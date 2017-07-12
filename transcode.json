@@ -1,0 +1,109 @@
+{
+    //转码完后会读取转码文件的duration，和源文件对比，差值大于以下值时认为失败. 单位秒.
+    "max_duration_diff": 30,
+
+    //设置以下值时，仅对视频宽高在范围内(>= min and <= max)的片源转码. 可不设置.
+    "min_video_width": 100,
+    "max_video_width": 2000,
+    "min_video_height": 100,
+    "max_video_height": 2000,
+
+    //跳过输出分辨率大于输入的转码，根据width比较
+    "skip_upsize": false,
+
+    //检测文件的扩展名，不去分大小写
+    "file_types": [
+        "mpg",
+        "mpeg",
+        "ts",
+        "m2ts",
+        "avi",
+        "wmv",
+        "asf",
+        "mp4",
+        "mov",
+        "flv",
+        "f4v",
+        "mkv",
+        "3gp",
+        "rm",
+        "rmvb",
+        "trp",
+        "divx",
+        "vob",
+        "dat" 
+    ],
+
+    //可添加一路或多路输出.
+    //输出多路ABR码流时应设置keyint值, 并将scenecut设置为0, 这样可固定GOP大小。
+    //多路ABR码流，各路的keyint、scenecut、bframes、refs应保持一致。
+    "outputs": [
+        {
+            //======== format configs ========
+            "format": "mpegts",
+
+            //转码后文件的扩展名
+            "file_ext": ".m3u8",
+
+            //转码后文件末尾添加的部分，用于多路转码时区分不同的输出文件, 只有一路输出时可不设置
+            //如输入文件未abc.ts, 本output输出文件为abc_176x144.ts. 不设置name_append时为abc.ts
+            "name_append": "_352_500k",
+            //转码文件的总体码率，单位kbps
+            "bitrate": 500,
+
+            //以下项专用于mpegts格式，可不设置
+            "network_id": 1,
+            "stream_id": 1,
+            "service_id": 1,
+            "pmt_start_pid": 4096,
+            "start_pid": 256,
+            "meta_service_provider": "joygo",
+            "meta_service_name": "Service1",
+
+            //======== video configs ========
+            "vcodec": "libx264",
+
+            //视频编码的profile，libx264可取值为main, high, baseline. 如果不需要建议不设置.
+            "vprofile": "main",
+
+            //视频编码的level, libx264的可取值如下，如没有特殊需要不建议设置
+            //"1", "1b", "1.1", "1.2", "1.3", "2", "2.1", "2.2", "3", "3.1", "3.2", "4", "4.1", "4.2", "5", "5.1"
+            "vlevel": "3.1",
+
+            //视频编码的preset, libx264的可取值如下，速度越快同等码率下图像质量越差, 可不设置:
+            //"ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow", "placebo"
+            "preset": "medium",
+
+            //输出图像的宽高, 如果不设置和输入文件保持一致
+            "width": 352,
+            //"height": 288,
+
+            //码率控制方法, 可选值：vbr, cbr, abr, crf
+            //目前仅支持crf和cbr. vod和文件转码推荐crf
+            "rc": "crf",
+
+            //以下几个参数控制GOP，关键帧，参考帧，可不设置
+            "keyint": 100,
+            "refs": 6,
+            "bframes": 16,
+            "scenecut": 0,
+
+            //视频的宽高比，可不设置
+            //"aspect": "4:3",
+
+            //视频的帧率，可不设置
+            //"fps": 29.97,
+
+            //======== audio configs ========
+
+            "acodec": "libfaac",
+
+            //音频编码的比特率，必须设置，如48, 96, 128, 192
+            "audio_bitrate": 48,
+            //音频编码的采样率，必须设置，如22050, 44100, 48000, 96000, 192000. 视频一般用48000.
+            "audio_samplerate": 48000,
+            //音频编码的声道数
+            "audio_channels": 2
+        }
+    ]
+}

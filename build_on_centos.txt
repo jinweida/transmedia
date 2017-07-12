@@ -1,0 +1,57 @@
+yum install autoconf automake bison flex gcc gcc-c++ libtool cmake pkgconfig ncurses-devel
+
+misc/yasm-1.2.0.tar.gz
+./configure
+make
+make install
+
+misc/cmake-2.8.12.2.tar.gz
+./configure
+make
+make install
+
+编译前
+export PATH=/usr/local/cmake/bin:$PATH
+
+如果x265编译出来么没有动态苦，3rdparty/lib/pkg-config/下没有x265.pc:
+可能是hg程序没有正确运行，无法提取版本号。
+修改3rdparty/x265/source/cmake/version.cmake最后两行，打开注释，强制设置版本号。
+
+修改build/build_3rdparty.sh, 去掉ffmpeg编译的alsa参数:
+--enable-outdev=alsa \
+
+修改build/3rdparty.env, 打开以下几项编译：
+export BUILD_FREETYPE=y
+export BUILD_FAAC=y
+export BUILD_X264=y
+export BUILD_X265=y
+export BUILD_FFMPEG=y
+
+删除3rdparty/{bin,lib,include,share}
+build_3rdparty.sh -B
+
+cd server/c_modules/streamparser
+make
+cp streamparser ../../3rdparty/bin
+
+拷贝3rdparty/{bin,lib}目录发布
+
+easy_install argparse //centos可能是python 2.6.6, 没有argparse模块. 如果下载失败也可手工安装：
+centos的python 2.6.6没有argparse, 需要安装:
+argparse-1.2.1.tar.gz
+解压，进去后运行：
+python setup.py install 
+
+centos的python 2.6.6处理中文路径时，会导致subprocess.Popen()报下面错误：
+TypeError: execv() argument 1 must be encoded string without NULL bytes, not str
+另外，centos的python 2.6.6没有argparse。
+
+编译Python-2.7.3.tar.bz2使用:
+./configure --prefix=/tmp/python
+make all
+make install
+将/tmp/python拷贝到发布目录
+
+做个shell脚本调用：
+#!/usr/bin/env bash
+./python/bin/python ./transcode.py $*
