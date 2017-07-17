@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-@author: Ye Shengnan
+@author: jinweida
 create: Jul 28, 2014
 '''
 import os

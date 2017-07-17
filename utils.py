@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-@author: Ye Shengnan
+@author: jinweida
 create: Jul 14, 2014
 '''
 import subprocess

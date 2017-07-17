@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-@author: Ye Shengnan
+@author: jinweida
 create: Jul 2, 2014
 '''
 
